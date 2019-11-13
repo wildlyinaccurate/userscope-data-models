@@ -1,7 +1,7 @@
 import { Schema } from "mongoose"
 
 export type LighthouseResult = {
-  data: object
+  data: any
 }
 
 export const lighthouseResultSchema = new Schema(

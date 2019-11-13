@@ -1,7 +1,7 @@
 import { Schema } from "mongoose"
 
 export type BbcA11yResult = {
-  data: object
+  data: any
 }
 
 export const bbcA11yResultSchema = new Schema(

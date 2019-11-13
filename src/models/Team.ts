@@ -1,9 +1,12 @@
 import { Document, Schema } from "mongoose"
 
 export type TeamDocument = Document & {
-    name: string
+  name: string
 }
 
-export const teamSchema = new Schema({
+export const teamSchema = new Schema(
+  {
     name: String
-}, { timestamps: true })
+  },
+  { timestamps: true }
+)
