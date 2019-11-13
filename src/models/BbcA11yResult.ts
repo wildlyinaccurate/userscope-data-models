@@ -1,6 +1,6 @@
-import { Document, Schema } from "mongoose"
+import { Schema } from "mongoose"
 
-export type BbcA11yResultDocument = Document & {
+export type BbcA11yResult = {
   data: object
 }
 

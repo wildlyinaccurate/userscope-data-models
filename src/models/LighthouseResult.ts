@@ -1,6 +1,6 @@
-import { Document, Schema } from "mongoose"
+import { Schema } from "mongoose"
 
-export type LighthouseResultDocument = Document & {
+export type LighthouseResult = {
   data: object
 }
 

@@ -1,14 +1,14 @@
 import { Document, Schema } from "mongoose"
 import { TeamDocument } from "./Team"
-import { BbcA11yResultDocument, bbcA11yResultSchema } from "./BbcA11yResult"
-import { LighthouseResultDocument, lighthouseResultSchema } from "./LighthouseResult"
+import { BbcA11yResult, bbcA11yResultSchema } from "./BbcA11yResult"
+import { LighthouseResult, lighthouseResultSchema } from "./LighthouseResult"
 
 export type TestResultDocument = Document & {
   url: string
   team: TeamDocument
   blah: string
-  bbcA11yResults: BbcA11yResultDocument
-  lighthouseResults: LighthouseResultDocument
+  bbcA11yResults: BbcA11yResult
+  lighthouseResults: LighthouseResult
 }
 
 export const testResultSchema = new Schema(
