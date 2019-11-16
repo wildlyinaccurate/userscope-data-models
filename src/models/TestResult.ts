@@ -6,7 +6,6 @@ import { LighthouseResult, lighthouseResultSchema } from "./LighthouseResult"
 export type TestResultDocument = Document & {
   url: string
   team: TeamDocument
-  blah: string
   bbcA11yResults: BbcA11yResult
   lighthouseResults: LighthouseResult
 }
