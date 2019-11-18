@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt-nodejs"
 import crypto from "crypto"
-import { Document, Schema } from "mongoose"
+import { Document, Error, Schema } from "mongoose"
 import { TeamDocument } from "./Team"
 
 export type UserDocument = Document & {
@@ -15,10 +15,11 @@ export type UserDocument = Document & {
     picture: string
   }
 
-  comparePassword: comparePasswordFunction
-}
+  displayName: string
 
-type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void
+  comparePassword: comparePasswordFunction
+  gravatar: (size: number) => string
+}
 
 export interface AuthToken {
   accessToken: string
@@ -71,25 +72,24 @@ userSchema.virtual("displayName").get(function() {
   return this.profile.name || this.email || this.id
 })
 
-userSchema.methods.comparePassword = function(candidatePassword: string, cb: (err: Error, isMatch: boolean) => void) {
+type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void
+
+const comparePassword: comparePasswordFunction = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err: Error, isMatch: boolean) => {
     cb(err, isMatch)
   })
 }
 
-const getGravatar = (size: number) =>
-  function() {
-    if (!this.email) {
-      return `https://gravatar.com/avatar/?s=${size}&d=retro`
-    }
+userSchema.methods.comparePassword = comparePassword
 
-    const md5 = crypto
-      .createHash("md5")
-      .update(this.email)
-      .digest("hex")
-
-    return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`
+userSchema.methods.gravatar = function(size: number = 200) {
+  if (!this.email) {
+    return `https://gravatar.com/avatar/?s=${size}&d=retro`
   }
+  const md5 = crypto
+    .createHash("md5")
+    .update(this.email)
+    .digest("hex")
 
-userSchema.virtual("gravatar").get(getGravatar(200))
-userSchema.virtual("gravatarSmall").get(getGravatar(40))
+  return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`
+}
