@@ -10,6 +10,8 @@ export type TestResultDocument = Document & {
   bbcA11yResults: BbcA11yResult
   lighthouseResults: LighthouseResult
   testingErrors: [TestResultError]
+  createdAt: Date
+  modifiedAt: Date
 }
 
 export const testResultSchema = new Schema(
