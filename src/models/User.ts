@@ -15,8 +15,9 @@ export type UserDocument = Document & {
     picture: string
   }
 
-  displayName: string
+  isAdmin: boolean
 
+  displayName: () => string
   comparePassword: comparePasswordFunction
   gravatar: (size: number) => string
 }
@@ -41,6 +42,11 @@ export const userSchema = new Schema(
     profile: {
       name: String,
       picture: String
+    },
+
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
@@ -68,9 +74,9 @@ userSchema.pre("save", function save(next) {
   })
 })
 
-userSchema.virtual("displayName").get(function() {
+userSchema.methods.displayName = function() {
   return this.profile.name || this.email || this.id
-})
+}
 
 type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void
 
