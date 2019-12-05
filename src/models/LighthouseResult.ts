@@ -2,8 +2,8 @@ import { Schema } from "mongoose"
 
 export type LighthouseResult = {
   data: any
-  createdAt: Date
-  modifiedAt: Date
+  createdAt?: Date
+  modifiedAt?: Date
 }
 
 export const lighthouseResultSchema = new Schema(
